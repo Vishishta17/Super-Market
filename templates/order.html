@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Orders Booking
+{% endblock title %}
+
+{% block body %}
+
+<div class="container mt-3">
+<div class="row">
+
+<div class="col-md-5">
+<div class="card" style="width: 18rem;">
+  <img src="static/images/doc.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">WIDE RANGE OF PRODUCTS</h6>
+    <p class="card-text">Product Names</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">All Vegetables and Fruits</li>
+    <li class="list-group-item">All Groceries of daily usage</li>
+    <li class="list-group-item">Bakery as well as Stationary</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Contact Us</a>
+    <a href="#" class="card-link">About US</a>
+  </div>
+</div>
+
+</div>
+
+<div class="col-md-5">
+
+<h4 class="text-center bg-dark text-white">Make your Order</h4>
+<br>
+
+
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+    {{message}}
+
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+
+
+<form action="/order" method="post" class="jumbotron">
+
+  <div class="form-group">
+
+    <input type="email" class="form-control" id="email" value={{current_user.email}} name="email" required>
+  
+  </div>
+
+  <div class="form-group">
+  
+    <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+  
+  </div>
+
+  <div class="form-group">
+          
+                                      
+    <select class="form-control" id="item" name="item"  required>
+            <option selected>Select Item</option>
+            {% for d in products  %}
+            <option value="{{d.productname}}">{{d.productname}}</option>
+            {% endfor %}
+          </select>
+     </div>
+
+ <div class="form-group">
+
+  <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
+      
+ </div>
+
+ <div class="form-group">  
+                                      
+  <select class="form-control" id="method" name="method"  required>
+          <option selected>Method of Payment</option>
+          <option value="Cash">Cash</option>
+          <option value="Card">Card</option>
+          <option value="UPI">UPI</option>
+   
+        </select>
+   </div>
+
+  <div class="form-group">
+    
+    <input type="text" class="form-control" name="time" placeholder="Time" required>
+  
+  </div>
+  <div class="form-group">
+    
+    <input type="text" class="form-control" name="date" placeholder="date" required>
+  
+  </div>
+  <div class="form-group">
+    
+    <input type="text" class="form-control" id="category" name="category" placeholder="category" required>
+  
+  </div>
+
+  <div class="form-group">
+
+    <input type="number" class="form-control" id="number" name="number" placeholder="Phone Number" required>
+  
+  </div>
+
+  <button type="submit" id="btn" class="btn btn-dark btn-sm btn-block">Order</button>
+</form>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+{% endblock body %}

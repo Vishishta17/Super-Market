@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detail
+{% endblock title %}
+
+{% block body %}
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+    {{message}}
+
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">OID</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">NAME</th>
+      <th scope="col">ITEM</th>
+      <th scope="col">QUANTITY</th>
+      <th scope="col">UNIT PRICE</th>
+      <th scope="col">TOTAL PRICE</th>
+      <th scope="col">METHOD</th>
+      <th scope="col">DATE</th>
+      <th scope="col">TIME</th>
+      <th scope="col">PHONE NUMBER</th>
+      <th scope="col">EDIT</th>
+      <th scope="col">DELETE</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in orders %}
+      <tr>
+        <th scope="row">{{ post.oid }}</th>
+        <td>{{ post.email }}</td>
+        <td>{{ post.name }}</td>
+        <td>{{ post.item }}</td>
+        <td>{{ post.quantity }}</td>
+        {% for detail in details_data %}
+          {% if detail.oid == post.oid %}
+            <td>{{ detail.unitprice }}</td>
+            <td>{{ detail.total_price }}</td>
+          {% endif %}
+        {% endfor %}
+        <td>{{ post.method }}</td>
+        <td>{{ post.date }}</td>
+        <td>{{ post.time }}</td>
+        <td>{{ post.number }}</td>
+        <td><a href="/edit/{{ post.oid }}"><button class="btn btn-success">Edit</button></a></td>
+        <td><a href="/delete/{{ post.oid }}" onclick="return confirm('Are you sure to Delete data?');"><button class="btn btn-danger">Delete</button></a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock body %}
